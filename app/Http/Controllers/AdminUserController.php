@@ -16,7 +16,7 @@ class AdminUserController extends Controller
     }
 
     public function openAdd(){
-        return view('admin/addedituser');
+        return view('admin/addedituser', ['user' => null]);
     }
 
     public function store(Request $request){
@@ -40,4 +40,41 @@ class AdminUserController extends Controller
         // Redirect with success message
         return redirect()->route('adminuser.index')->with('success', 'User added successfully!');
     } 
+
+    public function openEdit($userid){
+        $user = User::where('id', $userid)->first();
+        return view('admin/addedituser')->with('user', $user);
+    }
+
+    public function updateUser(Request $request, $userid){
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $userid, // Exclude the current user from the unique check
+            'usertype' => 'required|in:Admin,Customer',
+            'address' => 'required|string|max:255',
+        ]);
+
+        $user = User::findOrFail($userid);
+
+        $user->name = $validatedData['name'];
+        $user->email = $validatedData['email'];
+        $user->usertype = $validatedData['usertype'];
+        $user->address = $validatedData['address'];
+
+        $user->save();
+
+        return redirect()->route('adminuser.index')->with('success', 'User updated successfully!');
+    }
+
+    public function deleteUser($userid)
+    {
+        // Find the user by ID
+        $user = User::findOrFail($userid);
+
+        // Delete the user
+        $user->delete();
+
+        // Redirect with success message
+        return redirect()->route('adminuser.index')->with('success', 'User deleted successfully!');
+    }
 }

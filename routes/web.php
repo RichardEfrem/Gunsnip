@@ -36,4 +36,10 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/user/add', [AdminUserController::class, 'openAdd'])->name('adduser.open');
 
     Route::post('/admin/user/add', [AdminUserController::class, 'store'])->name('admin.user.store');
+
+    Route::get('admin/user/edit/{userid}', [AdminUserController::class, 'openEdit'])->name('edituser.open');
+
+    Route::put('/admin/user/update/{userid}', [AdminUserController::class, 'updateUser'])->name('adminuser.update');
+
+    Route::delete('/admin/user/{id}', [AdminUserController::class, 'deleteUser'])->name('adminuser.delete');
 });
