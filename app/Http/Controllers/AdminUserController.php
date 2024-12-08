@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class AdminUserController extends Controller
 {
     public function index(){
-        $user = User::get();
+        $user = User::paginate(8);
         return view('admin/user')->with('users', $user);
     }
 
@@ -68,13 +68,10 @@ class AdminUserController extends Controller
 
     public function deleteUser($userid)
     {
-        // Find the user by ID
         $user = User::findOrFail($userid);
 
-        // Delete the user
         $user->delete();
 
-        // Redirect with success message
         return redirect()->route('adminuser.index')->with('success', 'User deleted successfully!');
     }
 }

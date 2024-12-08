@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\GradeController;
 use App\Http\Controllers\LoginAdminController;
 
 /*
@@ -42,4 +43,12 @@ Route::middleware(['admin'])->group(function () {
     Route::put('/admin/user/update/{userid}', [AdminUserController::class, 'updateUser'])->name('adminuser.update');
 
     Route::delete('/admin/user/{id}', [AdminUserController::class, 'deleteUser'])->name('adminuser.delete');
+
+    Route::get('admin/grade', [GradeController::class, 'index'])->name('grade.index');
+
+    Route::get('admin/grade/add', [GradeController::class, 'openAdd'])->name('addgrade.open');
+
+    Route::post('admin/grade/add', [GradeController::class, 'submitGrade'])->name('addgrade.submit');
+
+    Route::delete('/admin/grade/{id}', [GradeController::class, 'deleteGrade'])->name('admingrade.delete');
 });
