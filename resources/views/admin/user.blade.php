@@ -24,8 +24,19 @@
         </div>
 
         <div>
-            <input type="text" class="mt-10 bg-gray-200 pr-36 pl-4 py-2 rounded-md" placeholder="Input Username / Email" name="SearchUser">
-            <button class="bg-blue-500 hover:bg-blue-800 text-white rounded-md p-2 ml-2 ease-in-out duration-300">Search</button>
+            <form action="{{ route('adminuser.index') }}" method="GET">
+                <input 
+                    type="text" 
+                    class="mt-10 bg-gray-200 pr-60 pl-4 py-2 rounded-md" 
+                    placeholder=" Search User " 
+                    name="search" 
+                    value="{{ request('search') }}">
+                <button 
+                    type="submit" 
+                    class="bg-blue-500 hover:bg-blue-800 text-white rounded-md p-2 ml-2 ease-in-out duration-300">
+                    Search
+                </button>
+            </form>
         </div>
 
 

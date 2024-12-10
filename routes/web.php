@@ -1,11 +1,12 @@
 <?php
 
+use App\Models\Series;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\SeriesController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\LoginAdminController;
-use App\Models\Series;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,4 +69,8 @@ Route::middleware(['admin'])->group(function () {
     Route::put('admin/series/edit/{seriesid}', [SeriesController::class, 'editSeries'])->name('series.edit');
 
     Route::delete('admin/series/{seriesid}', [SeriesController::class, 'deleteSeries'])->name('series.delete');
+
+
+    //Product Panel Route
+    Route::get('admin/product', [ProductController::class, 'index'])->name('product.index');
 });

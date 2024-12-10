@@ -7,10 +7,20 @@ use Illuminate\Http\Request;
 
 class SeriesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $series = Series::get();
-        return view('admin/series')->with('series', $series);
+        $query = Series::query();
+        if ($request->has('search') && $request->input('search') !== '') {
+            $search = $request->input('search');
+            $query->where(function($query) use ($search) {
+                $query->where('name', 'like', "%$search%")
+                      ->orWhere('series_description', 'like', "%$search%");
+            });
+        }
+        
+
+        $series = $query->paginate(4);
+        return view('admin/series', ['series' => $series, 'search' => $request->input('search')]);
     }
 
     public function openAdd()

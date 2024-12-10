@@ -10,9 +10,19 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminUserController extends Controller
 {
-    public function index(){
-        $user = User::paginate(8);
-        return view('admin/user')->with('users', $user);
+    public function index(Request $request){
+        $query = User::query();
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('name', 'like', "%$search%")
+                ->orWhere('email', 'like', "%$search%")
+                ->orWhere('id', $search)
+                ->orWhere('usertype', 'like', "%$search%");
+    }
+
+        $users = $query->paginate(5);
+        return view('admin/user', ['users' => $users, 'search' => $request->input('search')]);
     }
 
     public function openAdd(){
