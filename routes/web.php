@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Series;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\SeriesController;
@@ -32,7 +33,11 @@ Route::post('/admin', [LoginAdminController::class, 'logout'])->name('logout');
 Route::middleware(['admin'])->group(function () {
 
     Route::get('/admin', function () {
-        return view('admin/dashboard');
+        if (Auth::check()){
+            $user = Auth::user();
+            return view('admin/dashboard', compact('user'));   
+        }
+        return redirect('login');
     })->name('admindashboard');
     
     //User Panel Route
@@ -70,7 +75,23 @@ Route::middleware(['admin'])->group(function () {
 
     Route::delete('admin/series/{seriesid}', [SeriesController::class, 'deleteSeries'])->name('series.delete');
 
-
     //Product Panel Route
     Route::get('admin/product', [ProductController::class, 'index'])->name('product.index');
+    
+    Route::get('admin/product/add', [ProductController::class, 'openAdd'])->name('addproduct.open');
+
+    Route::post('admin/product/add', [ProductController::class, 'addGunpla'])->name('addproduct.submit');
+
+    Route::delete('admin/product/{seriesid}', [ProductController::class, 'deleteGunpla'])->name('gunpla.delete');
+
+    Route::get('admin/product/edit/{gunplaid}', [ProductController::class, 'openEdit'])->name('editproduct.open');
+
+    Route::put('admin/product/edit/{gunplaid}', [ProductController::class, 'editGunpla'])->name('editproduct.submit');
+
+    Route::get('admin/product/edit/picture/{gunplaid}', [ProductController::class, 'openPicture'])->name('gunplapicture.open');
+
+    Route::post('admin/product/edit/picture/{gunplaid}', [ProductController::class, 'uploadPicture'])->name('gunplapicture.upload');
+
+    Route::delete('admin/product/edit/picture/{gunplaid}/{imageid}', [ProductController::class, 'deletePicture'])->name('gunplapicture.delete');
+
 });

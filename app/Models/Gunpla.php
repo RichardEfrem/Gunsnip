@@ -17,8 +17,8 @@ class Gunpla extends Model
         'price',
         'ratings',
         'release_date',
-        'pBandai',
         'totalStock',
+        'totalPrice',
         'series_id',
         'grade_id'
     ];

@@ -60,7 +60,7 @@
 		</div>
 
 		<div class="text-left text-sm font-thin mt-2 w-4/5 mx-auto overflow-hidden transition-all duration-300 ease-in-out max-h-0" id="submenu">
-			<a href="" class="cursor-pointer p-2 hover:bg-slate-600 duration-300 rounded-md mt-1 text-white block">Products</a>
+			<a href="{{ route('product.index') }}" class="cursor-pointer p-2 hover:bg-slate-600 duration-300 rounded-md mt-1 text-white block">Products</a>
 			<a href="{{ route('grade.index') }}" class="cursor-pointer p-2 hover:bg-slate-600 duration-300 rounded-md mt-1 text-white block">Grades</a>
 			<a href="{{ route('series.index') }}" class="cursor-pointer p-2 hover:bg-slate-600 duration-300 rounded-md mt-1 text-white block">Series</a>
 		</div>		

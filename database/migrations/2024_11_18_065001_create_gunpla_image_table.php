@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('gunpla_image', function (Blueprint $table) {
+            $table->id();
             $table->text('image_path');
             $table->unsignedBigInteger('gunpla_id');
             $table->foreign('gunpla_id')

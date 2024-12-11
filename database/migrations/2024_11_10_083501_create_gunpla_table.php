@@ -18,7 +18,6 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('ratings')->nullable();
             $table->date('release_date');
-            $table->integer('pBandai');
             $table->integer('totalStock');
             $table->integer('totalSales');
             $table->unsignedBigInteger('series_id');

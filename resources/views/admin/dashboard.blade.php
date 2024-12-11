@@ -3,6 +3,6 @@
 
 @section('admin/content')
     <section class="mt-4">
-        <h1 class="text-4xl font-bold">Dashboard</h1>
+        <h1 class="text-4xl font-bold">Welcome {{ $user->name }}</h1>
     </section>
 @endsection
