@@ -8,6 +8,7 @@ use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\LoginAdminController;
+use App\Http\Controllers\OrderHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,4 +95,6 @@ Route::middleware(['admin'])->group(function () {
 
     Route::delete('admin/product/edit/picture/{gunplaid}/{imageid}', [ProductController::class, 'deletePicture'])->name('gunplapicture.delete');
 
+    //Order History Panel Route
+    Route::get('admin/orderhistory', [OrderHistoryController::class, 'index'])->name('orderhistory.index');
 });
