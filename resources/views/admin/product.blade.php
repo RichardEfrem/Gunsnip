@@ -41,6 +41,65 @@
         </form>
     </div>
 
+    <div class="mt-6">
+        <form action="{{ route('product.index') }}" method="GET">
+            <!-- Grade Filter -->
+            <select name="grade" class="bg-gray-200 px-4 py-2 rounded-md">
+                <option value="">Filter by Grade</option>
+                @foreach ($grades as $grade)
+                    <option value="{{ $grade->id }}" {{ request('grade') == $grade->id ? 'selected' : '' }}>
+                        {{ $grade->grade_name }}
+                    </option>
+                @endforeach
+            </select>
+    
+            <!-- Release Date Filter -->
+            <input 
+                type="date" 
+                name="release_date" 
+                class="bg-gray-200 px-4 py-2 rounded-md"
+                value="{{ request('release_date') }}" 
+            />
+    
+            <!-- Price Filter -->
+            <input 
+                type="number" 
+                name="price_min" 
+                placeholder="Min Price" 
+                class="bg-gray-200 px-4 py-2 rounded-md"
+                value="{{ request('price_min') }}"
+            />
+            <input 
+                type="number" 
+                name="price_max" 
+                placeholder="Max Price" 
+                class="bg-gray-200 px-4 py-2 rounded-md"
+                value="{{ request('price_max') }}"
+            />
+    
+            <!-- Total Stock Filter -->
+            <input 
+                type="number" 
+                name="stock_min" 
+                placeholder="Minimum Stock" 
+                class="bg-gray-200 px-4 py-2 rounded-md"
+                value="{{ request('stock_min') }}"
+            />
+    
+            <!-- Submit Button -->
+            <button 
+                type="submit" 
+                class="bg-blue-500 hover:bg-blue-800 text-white rounded-md p-2 ml-2 ease-in-out duration-300">
+                Apply Filters
+            </button>
+        </form>
+    </div>
+    
+
+    <div>
+        
+    </div>
+
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-6">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border border-gray-300">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -107,6 +166,7 @@
                     </td>
                     <td class="px-6 py-4 border border-gray-300">
                         <div class="flex items-center">
+                            <a href="{{ route('gunplapicture.open', $item->id) }}" class="font-medium text-green-600 dark:text-green-500 hover:underline mr-2">Picture</a>
                             <a href="{{ route('editproduct.open', $item->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-2">Edit</a>
                             <button 
                                 type="button" 

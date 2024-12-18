@@ -14,7 +14,7 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Gunpla::query()->with(['series', 'grade']); // Include relationships
+        $query = Gunpla::query()->with(['series', 'grade']); 
 
         if ($request->has('search') && $request->input('search') !== '') {
             $search = $request->input('search');
@@ -34,8 +34,33 @@ class ProductController extends Controller
             });
         }
 
+        // Grade Filter
+        if ($request->filled('grade')) {
+            $query->where('grade_id', $request->input('grade'));
+        }
+
+        // Release Date Filter
+        if ($request->filled('release_date')) {
+            $query->whereDate('release_date', '=', $request->input('release_date'));
+        }
+
+        // Price Range Filter
+        if ($request->filled('price_min')) {
+            $query->where('price', '>=', $request->input('price_min'));
+        }
+        if ($request->filled('price_max')) {
+            $query->where('price', '<=', $request->input('price_max'));
+        }
+
+        // Total Stock Range Filter
+        if ($request->filled('stock_min')) {
+            $query->where('totalStock', '>=', $request->input('stock_min'));
+        }
+
+        $grades = Grade::all();
+
         $gunplas = $query->paginate(5);
-        return view('admin/product', ['gunplas' => $gunplas, 'search' => $request->input('search')]);
+        return view('admin/product', ['gunplas' => $gunplas, 'search' => $request->input('search'), 'grades' => $grades]);
     }
 
     public function openAdd()

@@ -5,7 +5,7 @@
 <section class="pt-5">
     <div class="container">
         @if ($gunpla)
-        <h1 class="text-4xl font-bold lg:mx-12">Edit Employee</h1>
+        <h1 class="text-4xl font-bold lg:mx-12">Edit Gunpla</h1>
         <div class="w-full">
             <form action="{{ route('editproduct.submit', $gunpla->id) }}" class="mt-8" method="POST">
                 @csrf
@@ -63,15 +63,12 @@
                     <div class="w-full px-4 mt-8">
                         <button class="bg-cyan-300 hover:bg-cyan-500 w-full rounded-lg p-2" type="submit">Update</button>
                     </div>
-                    <div class="w-full px-4 mt-8">
-                        <a href="{{ route('gunplapicture.open', $gunpla->id) }}" class="mt-8 flex justify-center bg-green-300 hover:bg-green-500 w-full rounded-lg p-2">Add Pictures</a>
-                    </div>
                     
                 </div>
             </form>
         </div>
         @else
-        <h1 class="text-4xl font-bold lg:mx-12">Add New User</h1>
+        <h1 class="text-4xl font-bold lg:mx-12">Add New Gunpla</h1>
         <div class="w-full">
             <form action="{{ route('addproduct.submit') }}" class="mt-8" method="POST">
                 @csrf

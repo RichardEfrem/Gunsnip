@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminBannerController;
 use App\Models\Series;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +23,7 @@ use App\Http\Controllers\OrderHistoryController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('User/beli-home');
 });
 
 Route::get('/admin/login', [LoginAdminController::class, 'index'])->name('loginadmin.index');
@@ -97,4 +98,11 @@ Route::middleware(['admin'])->group(function () {
 
     //Order History Panel Route
     Route::get('admin/orderhistory', [OrderHistoryController::class, 'index'])->name('orderhistory.index');
+
+    //Admin Banner Controller
+    Route::get('admin/bannercontroll', [AdminBannerController::class, 'index'])->name('bannercontroller.index');
+
+    Route::post('admin/bannercontroll/add', [AdminBannerController::class, 'addBanner'])->name('banner.add');
+
+    Route::delete('admin/bannercontroll/{id}', [AdminBannerController::class, 'deleteBanner'])->name('deletebanner');
 });
