@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
-    <title>Lepas Kost</title>
-    <link rel="icon" href="image/lepaskos-logo.png" type="image/png">
+    <title>Gunsnip</title>
+    <link rel="icon" href="" type="image/png">
 </head>
 <body>
     <div class="header">

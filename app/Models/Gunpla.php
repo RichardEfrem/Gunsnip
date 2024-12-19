@@ -28,15 +28,20 @@ class Gunpla extends Model
     //     return $this->hasMany(Orderhistoryitem::class, 'gunpla_id', 'id');
     // }
 
-    // public function Cartitems()
-    // {
-    //     return $this->hasMany(Cartitems::class, 'gunpla_id', 'id');
-    // }
+    public function Cartitems()
+    {
+        return $this->hasMany(CartItem::class, 'gunpla_id', 'id');
+    }
 
     // public function Review()
     // {
     //     return $this->hasMany(Review::class, 'gunpla_id', 'id');
     // }
+
+    public function Favorites()
+    {
+        return $this->hasMany(Favorites::class, 'gunpla_id', 'id');
+    }
 
     public function Series()
     {

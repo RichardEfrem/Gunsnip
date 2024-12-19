@@ -39,10 +39,15 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // public function Cart()
-    // {
-    //     return $this->hasOne(Cart::class, 'user_id', 'id');
-    // }
+    public function Cart()
+    {
+        return $this->hasOne(Cart::class, 'user_id', 'id');
+    }
+
+    public function Favorites()
+    {
+        return $this->hasMany(Favorites::class, 'user_id', 'id');
+    }
 
     // public function Orderhistory()
     // {

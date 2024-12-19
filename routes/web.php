@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AdminBannerController;
 use App\Models\Series;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -8,8 +7,13 @@ use App\Http\Controllers\GradeController;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\LoginAdminController;
+use App\Http\Controllers\AdminBannerController;
 use App\Http\Controllers\OrderHistoryController;
+use App\Http\Controllers\UserHomepageController;
+use App\Http\Controllers\UserProductPageController;
+use App\Http\Controllers\UserRegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,10 +26,28 @@ use App\Http\Controllers\OrderHistoryController;
 |
 */
 
-Route::get('/', function () {
-    return view('User/beli-home');
-});
 
+// User Page 
+Route::get('/', [UserHomepageController::class, 'index'])->name('home');
+
+//Login Register
+Route::get('/register', [UserRegisterController::class, 'index'])->name('register');
+
+Route::post('/register', [UserRegisterController::class, 'registerUser'])->name('register.submit');
+
+Route::get('/login', [UserLoginController::class, 'index'])->name('login');
+
+Route::post('/login', [UserLoginController::class, 'authenticate'])->name('login.submit');
+
+//Product Page
+Route::get('/productPage', [UserProductPageController::class, 'index'])->name('productpage.index');
+
+Route::get('/productPage/filter', [UserProductPageController::class, 'filter'])->name('gunpla.filter');
+
+
+
+
+// Admin Page
 Route::get('/admin/login', [LoginAdminController::class, 'index'])->name('loginadmin.index');
 
 Route::post('/admin/login', [LoginAdminController::class, 'authenticate'])->name('admin.authenticate');
