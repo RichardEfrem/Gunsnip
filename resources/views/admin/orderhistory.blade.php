@@ -81,8 +81,12 @@
                     </td>
                     <td class="px-6 py-4 border border-gray-300">
                         <div class="flex items-center">
-                            <a href="" class="font-medium text-green-600 dark:text-green-500 hover:underline mr-2">View</a>
-                            <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-2">Edit Status</button>                            
+                            <button 
+                                data-id="{{ $item->id }}" 
+                                data-status="{{ $item->status }}" 
+                                class="change-status-btn font-medium text-blue-600 dark:text-blue-500 hover:underline mr-2">
+                                Edit Status
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -94,4 +98,77 @@
         </div>
     </div>
 </section>
+
+<!-- Modal -->
+<div id="statusModal" class="fixed z-10 inset-0 hidden overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg w-full max-w-md">
+            <h2 class="text-lg font-bold mb-4">Change Order Status</h2>
+            <form id="statusForm">
+                @csrf
+                <input type="hidden" id="orderId">
+                <div>
+                    <label for="status" class="block text-sm font-medium text-gray-700">Select Status</label>
+                    <select id="status" name="status" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                        <option value="Pending">Pending</option>
+                        <option value="On Process">On Process</option>
+                        <option value="On Delivery">On Delivery</option>
+                        <option value="Finished">Finished</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="mt-6 flex justify-end">
+                    <button type="button" id="closeModal" class="bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-md px-4 py-2">Cancel</button>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white rounded-md px-4 py-2 ml-2">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('statusModal');
+        const closeModal = document.getElementById('closeModal');
+        const statusForm = document.getElementById('statusForm');
+
+        document.querySelectorAll('.change-status-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const orderId = this.getAttribute('data-id');
+                const currentStatus = this.getAttribute('data-status');
+
+                document.getElementById('orderId').value = orderId;
+                document.getElementById('status').value = currentStatus;
+
+                modal.classList.remove('hidden');
+            });
+        });
+
+        closeModal.addEventListener('click', function () {
+            modal.classList.add('hidden');
+        });
+
+        statusForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const orderId = document.getElementById('orderId').value;
+            const status = document.getElementById('status').value;
+
+            fetch(`/orderhistory/${orderId}/update-status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                },
+                body: JSON.stringify({ status })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire('Success', data.message, 'success');
+                    location.reload();
+                }
+            });
+        });
+    });
+</script>
 @endsection

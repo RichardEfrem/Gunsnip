@@ -51,9 +51,6 @@
                             Email
                         </th>
                         <th scope="col" class="px-6 py-3 border border-gray-300">
-                            Address
-                        </th>
-                        <th scope="col" class="px-6 py-3 border border-gray-300">
                            Usertype
                         </th>
                         <th scope="col" class="px-6 py-3 border border-gray-300">
@@ -69,9 +66,6 @@
                         </th>
                         <td class="px-6 py-4 border border-gray-300">
                             {{ $user->email }}
-                        </td>
-                        <td class="px-6 py-4 border border-gray-300">
-                            {{ $user->address }}
                         </td>
                         <td class="px-6 py-4 border border-gray-300">
                             {{ $user->usertype }}

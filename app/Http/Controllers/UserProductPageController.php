@@ -50,4 +50,67 @@ class UserProductPageController extends Controller
         return view('User/product-search')->with('gunpla', $gunpla)->with('grades', $grades)->with('series', $series);
     }
 
+    public function filterByGrade($grade)
+    {
+        // Fetch the grade ID based on the grade name
+        $gradeRecord = Grade::where('grade_name', $grade)->first();
+
+        // If the grade doesn't exist, return to the product page with an error message
+        if (!$gradeRecord) {
+            return redirect()->route('User.product-search')->with('error', 'Grade not found.');
+        }
+
+        // Query Gunpla by the grade ID
+        $gunpla = Gunpla::with(['GunplaImage' => function ($query) {
+            $query->orderBy('id', 'asc'); // Fetch only the first image
+        }, 'series'])->where('grade_id', $gradeRecord->id)->paginate(12);
+
+        // Fetch all grades and series for the filters
+        $grades = Grade::get();
+        $series = Series::get();
+
+        // Return the view with the filtered Gunpla
+        return view('User/product-search')
+            ->with('gunpla', $gunpla)
+            ->with('grades', $grades)
+            ->with('series', $series)
+            ->with('selectedGrade', $grade);
+    }
+
+    public function search(Request $request)
+    {
+        $query = Gunpla::query()->with(['series', 'grade']); 
+
+        if ($request->has('search') && $request->input('search') !== '') {
+            $search = $request->input('search');
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%$search%")
+                    ->orWhere('description', 'like', "%$search%")
+                    ->orWhere('price', 'like', "%$search%")
+                    ->orWhere('release_date', 'like', "%$search%")
+                    ->orWhere('totalStock', 'like', "%$search%")
+                    ->orWhere('totalSales', 'like', "%$search%")
+                    ->orWhereHas('series', function ($query) use ($search) {
+                        $query->where('name', 'like', "%$search%"); 
+                    })
+                    ->orWhereHas('grade', function ($query) use ($search) {
+                        $query->where('grade_name', 'like', "%$search%"); 
+                    });
+            });
+        }
+
+        // Get the filtered Gunpla records
+        $gunpla = $query->paginate(12);
+
+        // Fetch grades, series, and other necessary data for the filters
+        $grades = Grade::get();
+        $series = Series::get();
+
+        // Return the view with the filtered data
+        return view('User/product-search')
+            ->with('gunpla', $gunpla)
+            ->with('grades', $grades)
+            ->with('series', $series);
+    }
+
 }

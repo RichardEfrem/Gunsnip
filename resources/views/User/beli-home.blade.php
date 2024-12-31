@@ -1,5 +1,6 @@
 @extends('User.bases.base')
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @section('content')
     <style>
         /* Simple fade animation */
@@ -114,6 +115,19 @@
         }
     </style>
     <div class="grid justify-center item-center overflow-hidden">
+        @if (session('success'))
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: '{{ session('success') }}',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                });
+            </script>
+        @endif
         <div class="relative w-[1600px] h-full px-20 mt-5 overflow-hidden">
             <!-- Slider Container -->
             <div id="carousel" class="relative">
@@ -146,7 +160,7 @@
 
                     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-36">
                         <!-- Grade Cards -->
-                        <a href="#">
+                        <a href="{{ route('gunpla.filterbygrade', 'Super Deformed') }}">
                             <div class="card">
                                 <div class="wrapper">
                                     <img src="storage/img/cover/sd.jpg" class="cover-image" />
@@ -155,7 +169,7 @@
                                 <img src="storage/img/sd.png" class="character" />
                             </div>
                         </a>
-                        <a href="#">
+                        <a href="{{ route('gunpla.filterbygrade', 'High Grade') }}">
                             <div class="card">
                                 <div class="wrapper">
                                     <img src="storage/img/cover/hg.jpg" class="cover-image" />
@@ -165,7 +179,7 @@
                             </div>
                         </a>
 
-                        <a href="#">
+                        <a href="{{ route('gunpla.filterbygrade', 'Real Grade') }}">
                             <div class="card">
                                 <div class="wrapper">
                                     <img src="storage/img/cover/rg.webp" class="cover-image" />
@@ -175,7 +189,7 @@
                             </div>
                         </a>
 
-                        <a href="#">
+                        <a href="{{ route('gunpla.filterbygrade', 'Master Grade') }}">
                             <div class="card">
                                 <div class="wrapper">
                                     <img src="storage/img/cover/mg.jpg" class="cover-image" />
@@ -185,7 +199,7 @@
                             </div>
                         </a>
 
-                        <a href="#">
+                        <a href="{{ route('gunpla.filterbygrade', 'Perfect Grade') }}">
                             <div class="card">
                                 <div class="wrapper">
                                     <img src="storage/img/cover/pg.jpg" class="cover-image" />
@@ -210,7 +224,7 @@
                             <div class="max-w-sm rounded overflow-hidden shadow-lg border group relative">
                                 <!-- Image Section -->
                                 <div class="w-full h-64 bg-gray-100 relative">
-                                    <a href="">
+                                    <a href="{{ route('productinfo.index', $item->id) }}">
                                         @if ($item->GunplaImage->first())
                                             <img src="{{ asset($item->GunplaImage->first()->image_path) }}"
                                                 alt="{{ $item->name }}" class="object-contain w-full h-full" />
@@ -234,18 +248,7 @@
                                         </button>
                                     </div>
 
-                                    <!-- Add to Cart Button -->
-                                    <button
-                                        class="flex items-center justify-center absolute bottom-5 left-1/2 transform -translate-x-1/2 text-black bg-white hover:bg-yellow-500 hover:text-white text-lg font-bold hover:shadow-xl shadow-md rounded-lg opacity-0 group-hover:opacity-100 transition-all"
-                                        style="width: 250px; height: 60px;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" width="30" height="30"
-                                            class="mr-2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                                        </svg>
-                                        Add to Cart
-                                    </button>
+
                                 </div>
 
                                 <!-- Description Section -->
@@ -298,7 +301,7 @@
                             <div class="max-w-sm rounded overflow-hidden shadow-lg border group relative">
                                 <!-- Image Section -->
                                 <div class="w-full h-64 bg-gray-100 relative">
-                                    <a href="">
+                                    <a href="{{ route('productinfo.index', $item->id) }}">
                                         @if ($item->GunplaImage->first())
                                             <img src="{{ asset($item->GunplaImage->first()->image_path) }}"
                                                 alt="{{ $item->name }}" class="object-contain w-full h-full" />
@@ -322,18 +325,7 @@
                                         </button>
                                     </div>
 
-                                    <!-- Add to Cart Button -->
-                                    <button
-                                        class="flex items-center justify-center absolute bottom-5 left-1/2 transform -translate-x-1/2 text-black bg-white hover:bg-yellow-500 hover:text-white text-lg font-bold hover:shadow-xl shadow-md rounded-lg opacity-0 group-hover:opacity-100 transition-all"
-                                        style="width: 250px; height: 60px;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" width="30" height="30"
-                                            class="mr-2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                                        </svg>
-                                        Add to Cart
-                                    </button>
+
                                 </div>
 
                                 <!-- Description Section -->

@@ -70,6 +70,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,30 +78,44 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
             margin: 0;
         }
     </style>
 </head>
+
 <body class="bg-gray-100 h-full w-full flex">
     @if (session('success'))
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: '{{ session('success') }}',
-                        showConfirmButton: false,
-                        timer: 3000
-                    });
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 3000
                 });
-            </script>
-        @endif
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: '{{ session('error') }}',
+                    showConfirmButton: true
+                });
+            });
+        </script>
+    @endif
     <div class="flex bg-white h-full w-full">
         <!-- Left Side Image -->
         <div class="w-1/2 h-full">
-            <img src="" alt="Robot Image" class="h-full w-full object-cover">
+            <img src="storage/assets/GLogin.png" alt="Robot Image" class="h-full w-full object-cover">
         </div>
         <!-- Right Side Form -->
         <div class="p-8 w-1/2 flex flex-col justify-center">
@@ -109,19 +124,26 @@
                 <form class="space-y-4" method="POST" action="{{ route('login.submit') }}">
                     @csrf
                     <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Username / Email Address</label>
-                        <input class="shadow appearance-none border border-black border-2 rounded rounded-[15px] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Enter your email">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Username / Email
+                            Address</label>
+                        <input
+                            class="shadow appearance-none border border-black border-2 rounded rounded-[15px] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="email" name="email" type="email" placeholder="Enter your email">
                     </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
-                        <input class="shadow appearance-none border border-black border-2 rounded rounded-[15px] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Enter your password">
+                        <input
+                            class="shadow appearance-none border border-black border-2 rounded rounded-[15px] w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="password" name="password" type="password" placeholder="Enter your password">
                     </div>
                     <div class="flex flex-col items-center text-sm space-y-2 mt-4">
                         <a href="#" class="text-blue-500 hover:underline">Forgot Password?</a>
-                        <a href="{{ route('register') }}" class="text-blue-500 hover:underline">Don't Have an Account? Register</a>
+                        <a href="{{ route('register') }}" class="text-blue-500 hover:underline">Don't Have an Account?
+                            Register</a>
                     </div>
-                    
-                    <button class="w-full bg-blue-700 text-[#FFD700] text-2xl font-bold py-3 px-4 rounded-[15px] rounded focus:outline-none focus:shadow-outline hover:bg-blue-500 hover:text-red-500 transition duration-300" type="button">Login</button>
+
+                    <button type="submit"
+                        class="w-full bg-blue-700 text-[#FFD700] text-2xl font-bold py-3 px-4 rounded-[15px] rounded focus:outline-none focus:shadow-outline hover:bg-blue-500 hover:text-red-500 transition duration-300">Login</button>
 
                     <div class="flex flex-col items-center text-sm space-y-2 mt-4">
                         <a href="{{ route('home') }}" class="text-blue-500 hover:underline">Back to Home</a>
@@ -131,5 +153,5 @@
         </div>
     </div>
 </body>
-</html>
 
+</html>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Models\Series;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -10,10 +11,14 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\LoginAdminController;
 use App\Http\Controllers\AdminBannerController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderHistoryController;
 use App\Http\Controllers\UserHomepageController;
-use App\Http\Controllers\UserProductPageController;
+use App\Http\Controllers\UserOrderHistory;
 use App\Http\Controllers\UserRegisterController;
+use App\Http\Controllers\UserProductInfoController;
+use App\Http\Controllers\UserProductPageController;
+use App\Http\Controllers\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +48,37 @@ Route::post('/login', [UserLoginController::class, 'authenticate'])->name('login
 Route::get('/productPage', [UserProductPageController::class, 'index'])->name('productpage.index');
 
 Route::get('/productPage/filter', [UserProductPageController::class, 'filter'])->name('gunpla.filter');
+
+Route::get('/productPage/{grade}', [UserProductPageController::class, 'filterByGrade'])->name('gunpla.filterbygrade');
+
+//Product Info
+Route::middleware(['auth.check'])->group(function () {
+    Route::get('/productInfo/{id}', [UserProductInfoController::class, 'index'])->name('productinfo.index');
+
+    Route::get('/search', [UserProductPageController::class, 'search'])->name('search');
+
+    Route::post('/logout', [UserLoginController::class, 'logout'])->name('logout_user');
+
+    Route::get('/cart/{id}', [CartController::class, 'index'])->name('opencart');
+
+    Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+
+    Route::delete('/cart/remove/{id}', [CartController::class, 'removeItem'])->name('cart.remove');
+
+    Route::post('/cart/order', [CartController::class, 'confirmOrder'])->name('cart.order');
+
+    Route::get('/profile', [UserProfileController::class, 'index'])->name('openprofile');
+
+    Route::put('/profile/update', [UserProfileController::class, 'updateProfile'])->name('profile.update');
+
+    Route::get('/address', [AddressController::class, 'index'])->name('openaddress');
+
+    Route::post('/address/store', [AddressController::class, 'store'])->name('address.store');
+
+    Route::get('/orderhistory', [UserOrderHistory::class, 'index'])->name('openhistory');
+});
+
+
 
 
 
@@ -120,6 +156,8 @@ Route::middleware(['admin'])->group(function () {
 
     //Order History Panel Route
     Route::get('admin/orderhistory', [OrderHistoryController::class, 'index'])->name('orderhistory.index');
+
+    Route::post('/orderhistory/{id}/update-status', [OrderHistoryController::class, 'updateStatus'])->name('orderhistory.updateStatus');
 
     //Admin Banner Controller
     Route::get('admin/bannercontroll', [AdminBannerController::class, 'index'])->name('bannercontroller.index');

@@ -49,10 +49,15 @@ class User extends Authenticatable
         return $this->hasMany(Favorites::class, 'user_id', 'id');
     }
 
-    // public function Orderhistory()
-    // {
-    //     return $this->hasMany(Orderhistory::class, 'user_id', 'id');
-    // }
+    public function Orderhistory()
+    {
+        return $this->hasMany(OrderHistory::class, 'user_id', 'id');
+    }
+
+    public function Address()
+    {
+        return $this->hasOne(Address::class, 'user_id', 'id');
+    }
 
     // public function Review()
     // {

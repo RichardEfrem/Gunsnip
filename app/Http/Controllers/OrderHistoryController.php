@@ -21,4 +21,22 @@ class OrderHistoryController extends Controller
         $history = $query->paginate(5);
         return view('admin/orderhistory', ['orderhistory' => $history, 'search' => $request->input('search')]);
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $order = OrderHistory::findOrFail($id);
+        $order->status = $request->status;
+
+        if ($request->status === 'On Delivery') {
+            $order->delivery_date = now();
+        }
+
+        $order->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Order status updated successfully!'
+        ]);
+    }
+
 }

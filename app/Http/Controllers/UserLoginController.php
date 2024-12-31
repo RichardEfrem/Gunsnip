@@ -31,7 +31,21 @@ class UserLoginController extends Controller
         // If authentication fails, return with an error message
         return back()->withErrors([
             'login' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        ])->with('error', 'Login failed! Invalid credentials.')->onlyInput('email');
+    }
+
+    // Logout the user
+    public function logout(Request $request)
+    {
+        // Logout the user
+        Auth::logout();
+
+        // Invalidate the session to prevent session fixation
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        // Redirect the user to the login page with a success message
+        return redirect()->route('home')->with('success', 'You have been logged out successfully.');
     }
 }
 

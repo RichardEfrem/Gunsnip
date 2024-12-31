@@ -24,12 +24,6 @@
                         focus:outline-none focus:ring-black focus:ring-1 focus:border-black">
                     </div>
                     <div class="w-full px-4 mb-4">
-                        <label for="address" class="font-bold text-md">Address</label>
-                        <input type="address" name="address" value="{{ $user->address }}" class="w-full 
-                        bg-slate-200 text-secondary p-3 rounded-md 
-                        focus:outline-none focus:ring-black focus:ring-1 focus:border-black">
-                    </div>
-                    <div class="w-full px-4 mb-4">
                         <label for="usertype" class="font-bold text-md">User Type</label>
                         <select id="usertype" name="usertype" class="w-full 
                         bg-slate-200 text-secondary p-3 rounded-md 
@@ -59,12 +53,6 @@
                     <div class="w-full px-4 mb-4">
                         <label for="email" class="font-bold text-md">Email</label>
                         <input type="email" name="email" class="w-full 
-                        bg-slate-200 text-secondary p-3 rounded-md 
-                        focus:outline-none focus:ring-black focus:ring-1 focus:border-black">
-                    </div>
-                    <div class="w-full px-4 mb-4">
-                        <label for="address" class="font-bold text-md">Address</label>
-                        <input type="address" name="address" class="w-full 
                         bg-slate-200 text-secondary p-3 rounded-md 
                         focus:outline-none focus:ring-black focus:ring-1 focus:border-black">
                     </div>

@@ -28,7 +28,7 @@ class Gunpla extends Model
     //     return $this->hasMany(Orderhistoryitem::class, 'gunpla_id', 'id');
     // }
 
-    public function Cartitems()
+    public function CartItem()
     {
         return $this->hasMany(CartItem::class, 'gunpla_id', 'id');
     }
