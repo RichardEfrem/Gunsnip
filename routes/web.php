@@ -1,24 +1,25 @@
 <?php
 
-use App\Http\Controllers\AddressController;
 use App\Models\Series;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\SeriesController;
+use App\Http\Controllers\UserOrderHistory;
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\LoginAdminController;
 use App\Http\Controllers\AdminBannerController;
-use App\Http\Controllers\CartController;
+use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\OrderHistoryController;
 use App\Http\Controllers\UserHomepageController;
-use App\Http\Controllers\UserOrderHistory;
 use App\Http\Controllers\UserRegisterController;
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\UserProductInfoController;
 use App\Http\Controllers\UserProductPageController;
-use App\Http\Controllers\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,13 +93,8 @@ Route::post('/admin', [LoginAdminController::class, 'logout'])->name('logout');
 
 Route::middleware(['admin'])->group(function () {
 
-    Route::get('/admin', function () {
-        if (Auth::check()){
-            $user = Auth::user();
-            return view('admin/dashboard', compact('user'));   
-        }
-        return redirect('login');
-    })->name('admindashboard');
+    //Dashboard
+    Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admindashboard');
     
     //User Panel Route
     Route::get('/admin/user', [AdminUserController::class, 'index'])->name('adminuser.index');
